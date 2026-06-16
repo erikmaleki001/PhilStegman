@@ -37,7 +37,7 @@
 
   /* HEADER */
   header{position:sticky;top:0;z-index:50;background:rgba(30,33,37,.96);backdrop-filter:blur(8px)}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1140px;margin:0 auto;position:relative}
   .logo{display:flex;align-items:center;gap:10px;color:#fff;font-family:'Plus Jakarta Sans';font-weight:800;font-size:1.15rem}
   .logo .mark{width:30px;height:30px;display:grid;place-items:center}
   .logo .mark svg{width:30px;height:30px}
@@ -153,7 +153,34 @@
     .hero h1{font-size:2.4rem}
   }
   @media(max-width:640px){
-    .nav-links{display:none}
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:#1a1f1a;
+      flex-direction:column;
+      align-items:stretch;
+      gap:0;
+      padding:8px 0 16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.4);
+      z-index:999;
+    }
+    .nav-links.open{display:flex}
+    .nav-links a{
+      padding:14px 24px;
+      font-size:1.05rem;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      border-radius:0;
+    }
+    .nav-links a.nav-cta{
+      margin:12px 24px 0;
+      text-align:center;
+      border-bottom:none;
+      border-radius:50px;
+      padding:12px 22px;
+    }
     .menu-btn{display:block}
     .cards,.steps,.field-row,.foot-grid{grid-template-columns:1fr}
     .hero h1{font-size:2rem}
@@ -180,7 +207,7 @@
       <a href="#contact">Contact</a>
       <a href="#contact" class="nav-cta phone-link">863-632-9692</a>
     </div>
-    <button class="menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='flex'?'none':'flex'">&#9776;</button>
+    <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
   </nav>
 </header>
 
@@ -411,6 +438,12 @@
       el.href = 'tel:8636329692';
     });
   }
+  // Close mobile menu when any nav link is tapped
+  document.querySelectorAll('.nav-links a').forEach(function(el) {
+    el.addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>
